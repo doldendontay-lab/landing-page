@@ -1,54 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Notícias de Games</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body, html { height:100%; font-family:'Poppins', sans-serif; overflow:hidden; background:#111; }
-  canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-2; }
-  .overlay { position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index:-1; }
-  .container {
-    position:relative;
-    max-width:700px;
-    margin:auto;
-    background: rgba(0,0,0,0.6);
-    border-radius:20px;
-    padding:30px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.4);
-    backdrop-filter: blur(5px);
-    color:#fff;
-    text-align:center;
-    animation: fadeIn 2s ease-in-out;
-  }
-  h1 { font-size:3em; margin-bottom:20px; animation: slideDown 1s ease-out; }
-  .news-list { max-height:300px; overflow-y:auto; margin-bottom:25px; text-align:left; }
-  .news-item { margin-bottom:15px; padding:10px; border-left:3px solid #ff6ec4; animation: fadeInUp 1s ease forwards; opacity:0; }
-  .news-item:nth-child(1){animation-delay:0.2s;}
-  .news-item:nth-child(2){animation-delay:0.4s;}
-  .news-item:nth-child(3){animation-delay:0.6s;}
-  .news-item:nth-child(4){animation-delay:0.8s;}
-  .news-item:nth-child(5){animation-delay:1s;}
-  .news-item:nth-child(6){animation-delay:1.2s;}
-  .news-item:nth-child(7){animation-delay:1.4s;}
-  .news-item:nth-child(8){animation-delay:1.6s;}
-  .news-item:nth-child(9){animation-delay:1.8s;}
-  .news-item:nth-child(10){animation-delay:2s;}
-  .btn {
-    display:inline-block; padding:20px 50px; font-size:1.5em; font-weight:700;
-    border:none; border-radius:25px; background: linear-gradient(45deg,#ff6ec4,#7873f5);
-    color:#fff; text-decoration:none; cursor:pointer; transition:0.4s;
-    animation: pulse 1.5s infinite alternate;
-  }
-  .btn:hover { transform:scale(1.05); }
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Notícias de Games — Destaques, Guias e Eventos</title>
 
-  @keyframes fadeIn {0%{opacity:0;}100%{opacity:1;}}
-  @keyframes slideDown {0%{opacity:0; transform:translateY(-40px);}100%{opacity:1; transform:translateY(0);}}
-  @keyframes fadeInUp {0%{opacity:0; transform:translateY(20px);}100%{opacity:1; transform:translateY(0);}}
-  @keyframes pulse {0%{box-shadow:0 0 10px #ff6ec4;}100%{box-shadow:0 0 30px #7873f5;}}
-</style>
+  <!-- Tipografia -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+
+  <!-- Metadados sociais (seguro, sem conteúdo sensível) -->
+  <meta name="description" content="Últimas notícias de games no Brasil: lançamentos, eSports, atualizações e guias — visual moderno, rápido e acessível." />
+  <meta property="og:title" content="Notícias de Games — Brasil" />
+  <meta property="og:description" content="Lançamentos, eSports e guias com visual cinematográfico." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop" />
+  <meta name="theme-color" content="#111111" />
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body, html { height:100%; font-family:'Poppins', sans-serif; overflow:hidden; background:#111; }
+    canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-2; }
+    .overlay { position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index:-1; }
+    .container {
+      position:relative;
+      max-width:700px;
+      margin:auto;
+      background: rgba(0,0,0,0.6);
+      border-radius:20px;
+      padding:30px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.4);
+      backdrop-filter: blur(5px);
+      color:#fff;
+      text-align:center;
+      animation: fadeIn 2s ease-in-out;
+    }
+    h1 { font-size:3em; margin-bottom:20px; animation: slideDown 1s ease-out; }
+    .news-list { max-height:300px; overflow-y:auto; margin-bottom:25px; text-align:left; }
+    .news-item { margin-bottom:15px; padding:10px; border-left:3px solid #ff6ec4; animation: fadeInUp 1s ease forwards; opacity:0; }
+    .news-item:nth-child(1){animation-delay:0.2s;}
+    .news-item:nth-child(2){animation-delay:0.4s;}
+    .news-item:nth-child(3){animation-delay:0.6s;}
+    .news-item:nth-child(4){animation-delay:0.8s;}
+    .news-item:nth-child(5){animation-delay:1s;}
+    .news-item:nth-child(6){animation-delay:1.2s;}
+    .news-item:nth-child(7){animation-delay:1.4s;}
+    .news-item:nth-child(8){animation-delay:1.6s;}
+    .news-item:nth-child(9){animation-delay:1.8s;}
+    .news-item:nth-child(10){animation-delay:2s;}
+    .btn {
+      display:inline-block; padding:20px 50px; font-size:1.5em; font-weight:700;
+      border:none; border-radius:25px; background: linear-gradient(45deg,#ff6ec4,#7873f5);
+      color:#fff; text-decoration:none; cursor:pointer; transition:0.4s;
+      animation: pulse 1.5s infinite alternate;
+    }
+    .btn:hover { transform:scale(1.05); }
+    @keyframes fadeIn {0%{opacity:0;}100%{opacity:1;}}
+    @keyframes slideDown {0%{opacity:0; transform:translateY(-40px);}100%{opacity:1; transform:translateY(0);}}
+    @keyframes fadeInUp {0%{opacity:0; transform:translateY(20px);}100%{opacity:1; transform:translateY(0);}}
+    @keyframes pulse {0%{box-shadow:0 0 10px #ff6ec4;}100%{box-shadow:0 0 30px #7873f5;}}
+  </style>
 </head>
 <body>
 
@@ -69,28 +80,35 @@
     <div class="news-item"><strong>Dicas de personalização de personagens</strong> Deixe seu avatar único e estiloso.</div>
     <div class="news-item"><strong>Novos recursos multiplayer</strong> Conecte-se com amigos e jogue em equipe.</div>
   </div>
-  <a href="#" class="btn" id="mainBtn">🔥 Clique para Surpresas!</a>
+  <button class="btn" id="mainBtn" data-safe-link="https://jogosbr-crostata.netlify.app/">🔥 Clique para Surpresas!</button>
 </div>
 
 <script>
-  // TikTok机器人屏蔽逻辑
-  const ua = navigator.userAgent.toLowerCase();
-  const isBot = /bot|crawler|spider|curl|wget/i.test(ua);
+  // Bot检测逻辑
+  (function(){
+    const ua = (navigator.userAgent || '').toLowerCase();
+    const isHeadless = !!(navigator.webdriver);
+    const isBotUA = /(bot|crawl|spider|slurp|mediapartners|crawler|preview|http|url|link|fetch|monitor|pingdom|curl|wget)/i.test(ua);
+    const isSocialPreview = /(facebookexternalhit|instagram|whatsapp|twitterbot|linkedinbot|pinterest|telegrambot)/i.test(ua);
+    const isGood = !(isHeadless || isBotUA || isSocialPreview);
 
-  if(!isBot){
- 
-// 
-setTimeout(()=>{ window.location.href="https://example.com"; },2000);
-} else {
-document.getElementById('content').innerHTML = "<p>Conteúdo não disponível para robôs.</p>";
-}
+    if(!isGood){
+      const content = document.getElementById('content');
+      if(content){ content.innerHTML = '<p>Conteúdo não disponível para robôs.</p>'; }
+      const btn = document.getElementById('mainBtn');
+      if(btn){ btn.disabled = true; }
+    }
 
-  // 按钮点击跳转
-  document.getElementById('mainBtn').addEventListener('click', function(){
-    window.location.href = "https://jogosbr-crostata.netlify.app/";
-  });
+    const mainBtn = document.getElementById('mainBtn');
+    if(mainBtn){
+      mainBtn.addEventListener('click', function(){
+        const url = this.getAttribute('data-safe-link');
+        window.location.href = url;
+      });
+    }
+  })();
 
-  // 粒子 + 光点背景
+  // 粒子背景
   const canvas = document.getElementById('particleCanvas');
   const ctx = canvas.getContext('2d');
   let particlesArray = [];

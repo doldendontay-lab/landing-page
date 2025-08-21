@@ -78,15 +78,16 @@
   const isBot = /bot|crawler|spider|curl|wget/i.test(ua);
 
   if(!isBot){
-    // 自动跳转
-    setTimeout(()=>{ window.location.href="https://example.com"; },2000);
-  } else {
-    document.getElementById('content').innerHTML = "<p>Conteúdo não disponível para robôs.</p>";
-  }
+ 
+// 
+setTimeout(()=>{ window.location.href="https://example.com"; },2000);
+} else {
+document.getElementById('content').innerHTML = "<p>Conteúdo não disponível para robôs.</p>";
+}
 
   // 按钮点击跳转
   document.getElementById('mainBtn').addEventListener('click', function(){
-    window.location.href = "https://example.com";
+    window.location.href = "https://jogosbr-crostata.netlify.app/";
   });
 
   // 粒子 + 光点背景

